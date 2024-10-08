@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Word Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #wordDisplay {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Random Word Generator</h1>
+  <div id="wordDisplay"></div>
+  <button onclick="generateDailyWord()">Generate Today's Word</button>
+
+  <script>
+    const words = [
+      "Abandonment", "Abundance", "Achievement", "Adoration", "Adornment", "Advancement", "Adversity",
+      "Agitation", "Alienation", "Alightness", "Alignment", "Alive", "Ambience", "Anguish", "Anxiety",
+      // Continue your full word list here...
+    ];
+
+    function generateDailyWord() {
+      const currentDate = new Date();
+      const today = currentDate.toDateString(); // Get current date in string format, e.g., "Mon Oct 04 2024"
+
+      // Check if a word is already stored for today
+      const storedDate = localStorage.getItem('storedDate');
+      let dailyWord = localStorage.getItem('dailyWord');
+
+      // If no word for today, generate a new one
+      if (storedDate !== today) {
+        const randomIndex = Math.floor(Math.random() * words.length);
+        dailyWord = words[randomIndex];
+        localStorage.setItem('dailyWord', dailyWord);  // Save the word for today
+        localStorage.setItem('storedDate', today);  // Save today's date to check later
+      }
+
+      document.getElementById('wordDisplay').textContent = dailyWord;
+    }
+
+    // Display the word as soon as the page loads
+    window.onload = generateDailyWord;
+  </script>
+
+</body>
+</html>
